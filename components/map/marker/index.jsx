@@ -12,7 +12,13 @@ export default function Marker({ text, tooltip, $hover, type }) {
             : 'bg-success'
         }`}
       >
-        <span className="circleText" title={tooltip}>
+        <span
+          className="circleText red-tooltip"
+          title={tooltip}
+          data-toggle="tooltip"
+          data-bs-toggle="tooltip"
+          data-placement="top"
+        >
           {text}
         </span>
       </div>

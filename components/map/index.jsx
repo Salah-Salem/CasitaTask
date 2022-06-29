@@ -7,8 +7,8 @@ const Map = ({ data }) => {
   const { Entry } = Entries
 
   const [center, setCenter] = useState({
-    lat: data[0].lat,
-    lng: data[0].lng,
+    lat: data[0]?.lat,
+    lng: data[0]?.lng,
   })
 
   return (

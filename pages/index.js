@@ -44,7 +44,7 @@ export default function Home() {
 
       <main className="main">
         <div className="row pt-5 pb-5 w-100">
-          <form>
+          <form onSubmit={(e) => e.preventDefault()}>
             <div className="row">
               <div className="col-5">
                 <Search onSearch={setToken} />
