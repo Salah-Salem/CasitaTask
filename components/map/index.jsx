@@ -1,14 +1,11 @@
 import GoogleMapReact from 'google-map-react'
 import { useState } from 'react'
-import { Entries } from '../../constants/feed'
 import Marker from './marker'
 
 const Map = ({ data }) => {
-  const { Entry } = Entries
-
   const [center, setCenter] = useState({
-    lat: data[0]?.lat,
-    lng: data[0]?.lng,
+    lat: data.length > 0 ? data[0]?.lat : 30.05114099635221,
+    lng: data.length > 0 ? data[0]?.lng : 31.23614260476863,
   })
 
   return (
