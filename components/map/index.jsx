@@ -3,50 +3,13 @@ import { useState } from 'react'
 import { Entries } from '../../constants/feed'
 import Marker from './marker'
 
-const Map = () => {
+const Map = ({ data }) => {
   const { Entry } = Entries
 
   const [center, setCenter] = useState({
-    lat: 24.771260333237798,
-    lng: 46.614093132300674,
+    lat: data[0].lat,
+    lng: data[0].lng,
   })
-  const distanceToMouse = (pt, mp) => {
-    if (pt && mp) {
-      // return distance between the marker and mouse pointer
-      return Math.sqrt(
-        (pt.x - mp.x) * (pt.x - mp.x) + (pt.y - mp.y) * (pt.y - mp.y),
-      )
-    }
-  }
-  const mapStyles = [
-    {
-      featureType: 'poi',
-      elementType: 'geometry',
-      stylers: [
-        {
-          color: '#e3ddd0',
-        },
-      ],
-    },
-    {
-      featureType: 'poi',
-      elementType: 'labels.text',
-      stylers: [
-        {
-          visibility: 'off',
-        },
-      ],
-    },
-    {
-      featureType: 'water',
-      elementType: 'labels.text.fill',
-      stylers: [
-        {
-          color: '#9e9e9e',
-        },
-      ],
-    },
-  ]
 
   return (
     <div style={{ height: '80vh', width: '100%' }}>
@@ -57,18 +20,8 @@ const Map = () => {
         }}
         center={center}
         defaultZoom={2}
-        distanceToMouse={distanceToMouse}
-        // onGoogleApiLoaded={({ map, maps }) => {
-        //   poses.map((item) => {
-        //     return new maps.Marker({
-        //       position: { lat: item.lat, lng: item.lng },
-        //       map,
-        //     })
-        //   })
-        // }}
-        // options={{ styles: mapStyles }}
       >
-        {Entry.map(({ lat, lng, id, sentiment, message }) => {
+        {data.map(({ lat, lng, id, sentiment, message }) => {
           return (
             <Marker
               key={id}

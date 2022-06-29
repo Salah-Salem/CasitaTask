@@ -1,0 +1,23 @@
+.form-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-color: $main-color;
+  padding: 0rem;
+
+  input {
+    border: none;
+    width: 100%;
+
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+  svg {
+    font-size: 2.5rem;
+    background: $main-color;
+    width: 5rem;
+    color: #fff;
+    padding: 0.5rem;
+  }
+}
