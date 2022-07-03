@@ -1,13 +1,28 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import Geocode from 'react-geocode'
 import { Map, Search, Select } from '../components'
 import { Entries } from '../constants/feed'
 
 export default function Home() {
   const { Entry } = Entries
   const [results, setResults] = useState(Entry)
+  const [locations, setLocations] = useState([])
   const [token, setToken] = useState('')
   const [token2, setToken2] = useState('')
+  let cities = []
+
+  // extract city name from message
+  const getCity = (str) => {
+    let data = str.split(',')
+    data.reverse()
+    for (let i = 0; i < data.length; i++) {
+      let format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
+      if (!format.test(data[i].trim())) {
+        return data[i].trim()
+      }
+    }
+  }
 
   useEffect(() => {
     if (token2 !== '' && token == '') {
@@ -30,10 +45,30 @@ export default function Home() {
     }
   }, [token, token2])
 
+  useEffect(() => {
+    setLocations([])
+    results.map((item) => {
+      cities.push(getCity(item.message))
+    })
+
+    Geocode.setApiKey('AIzaSyDKIrHpIyMYrcm2D5CFf-2r4QrwTJtHh-E')
+    cities.map(async (item) => {
+      const res = await Geocode.fromAddress(item)
+
+      if (res.status == 'OK') {
+        const { lat, lng } = res.results[0].geometry.location
+        setLocations((prev) => [...prev, { city: item, lat: lat, lng: lng }])
+      } else {
+        console.error(res)
+      }
+    })
+  }, [results])
+
   const handleClear = () => {
     setToken('')
     setToken2('')
   }
+
   return (
     <div className="container">
       <Head>
@@ -72,14 +107,14 @@ export default function Home() {
                 }
               >
                 <h2>
-                  {item.id}-{item.sentiment}
+                  {index + 1}-{item.sentiment}
                 </h2>
                 <p>{item.message}</p>
               </div>
             ))}
           </div>
         </div>
-        <Map data={results} />
+        <Map data={results} locations={locations} />
       </main>
     </div>
   )

@@ -2,10 +2,10 @@ import GoogleMapReact from 'google-map-react'
 import { useState } from 'react'
 import Marker from './marker'
 
-const Map = ({ data }) => {
+const Map = ({ data, locations }) => {
   const [center, setCenter] = useState({
-    lat: data.length > 0 ? data[0]?.lat : 30.05114099635221,
-    lng: data.length > 0 ? data[0]?.lng : 31.23614260476863,
+    lat: locations.length > 0 ? locations[0]?.lat : 30.05114099635221,
+    lng: locations.length > 0 ? locations[0]?.lng : 31.23614260476863,
   })
 
   return (
@@ -18,18 +18,20 @@ const Map = ({ data }) => {
         center={center}
         defaultZoom={2}
       >
-        {data.map(({ lat, lng, id, sentiment, message }) => {
-          return (
-            <Marker
-              key={id}
-              lat={lat}
-              lng={lng}
-              text={id}
-              type={sentiment}
-              tooltip={sentiment + ' ' + message}
-            />
-          )
-        })}
+        {data.map((item, index) =>
+          locations.map((loc) =>
+            item.message.includes(loc.city) ? (
+              <Marker
+                key={index + 1}
+                lat={loc.lat}
+                lng={loc.lng}
+                text={index + 1}
+                type={item.sentiment}
+                tooltip={item.sentiment + ' ' + item.message}
+              />
+            ) : null,
+          ),
+        )}
       </GoogleMapReact>
     </div>
   )
