@@ -81,13 +81,13 @@ export default function Home() {
         <div className="row pt-5 pb-5 w-100">
           <form onSubmit={(e) => e.preventDefault()}>
             <div className="row">
-              <div className="col-5">
+              <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 mt-1 mb-1">
                 <Search onSearch={setToken} />
               </div>
-              <div className="col-5">
+              <div className="col-xl-5 col-lg-5 col-md-6 col-sm-12 mt-1 mb-1">
                 <Select onSelect={setToken2} />
               </div>
-              <div className="col-2">
+              <div className="col-xl-2 col-lg-2 col-md-6 col-sm-12 mt-1 mb-1">
                 <button type="reset" onClick={() => handleClear()}>
                   Clear
                 </button>
