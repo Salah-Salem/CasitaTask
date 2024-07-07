@@ -69,6 +69,7 @@ export default function Home() {
         setToken2('')
     }
 
+console.log('change');
     return (
         <div className="container">
             <Head>
